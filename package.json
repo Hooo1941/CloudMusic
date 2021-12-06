@@ -2,6 +2,7 @@
   "name": "music",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://120.76.192.143:3000",
   "dependencies": {
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
@@ -17,6 +18,7 @@
     "@types/node": "^16.11.11",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "axios": "^0.24.0",
     "less": "^4.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
