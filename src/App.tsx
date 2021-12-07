@@ -21,8 +21,8 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { search } from 'service/api';
-const drawerWidth: number = 240;
+import { search, getSongUrl, phoneLogin, status } from 'service/api';
+const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -74,13 +74,27 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
-export default function App() {
+export default function App(): React.ReactElement {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
   useEffect(() => {
-    search().then((res) => console.log(res));
+    search({ keywords: 'you' })
+      .then((res) => console.log('success', res))
+      .catch((err) => console.log('err', err));
+    getSongUrl({ id: 3932159, br: 320000 })
+      .then((res) => console.log('success', res))
+      .catch((err) => console.log('err', err));
+    phoneLogin({ phone: 15527371668, password: '123' })
+      .then((res) => {
+        console.log('success', res);
+        status();
+      })
+      .catch((err) => console.log('err', err));
+    status()
+      .then((res) => console.log('success', res))
+      .catch((err) => console.log('err', err));
   });
 
   return (
