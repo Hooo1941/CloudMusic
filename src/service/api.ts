@@ -18,6 +18,22 @@ export async function search(option: API.Search): Promise<API.SearchResponse> {
   }
 }
 
+export async function getSearchSuggestion(
+  option: API.Suggest
+): Promise<API.SuggestResponse> {
+  try {
+    const response = await axios.get<API.APIResponse<API.SuggestResponse>>(
+      '/search/suggest',
+      { params: option }
+    );
+    if (response.data.code !== 200)
+      return Promise.reject(response.data.msg ?? 'Unknown Error');
+    return response.data.result ?? Promise.resolve({ songs: [] });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
 export async function getSongUrl(
   option: API.SongUrl
 ): Promise<API.SongUrlResponse> {
@@ -70,11 +86,84 @@ export async function status(): Promise<API.UserProfile> {
   }
 }
 
-// TODO: /user/playlist
+export async function getPlayList(
+  option: API.Playlist
+): Promise<API.PlaylistResponse> {
+  try {
+    const response = await axios.get<API.PlaylistResponse>('/user/playlist', {
+      params: option,
+    });
+    if (response.data.code !== 200)
+      return Promise.reject(response.data.msg ?? 'Unknown Error');
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
 
-// TODO: /playlist/detail
+export async function getPlayListDetail(
+  option: API.PlaylistDetail
+): Promise<API.PlaylistDetailResponse> {
+  try {
+    const response = await axios.get<API.PlaylistDetailResponse>(
+      '/playlist/detail',
+      { params: option }
+    );
+    if (response.data.code !== 200)
+      return Promise.reject(response.data.msg ?? 'Unknown Error');
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
 
-// TODO: /song/detail /lyric /comment/music
+export async function getSongDetail(
+  option: API.SongDetail
+): Promise<API.SongDetailResponse> {
+  try {
+    const response = await axios.get<API.SongDetailResponse>('/song/detail', {
+      params: { ids: option.ids.join(',') },
+    });
+    if (response.data.code !== 200)
+      return Promise.reject(response.data.msg ?? 'Unknown Error');
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function getLyric(option: API.Lyric): Promise<string> {
+  try {
+    const response = await axios.get<API.LyricResponse>('/lyric', {
+      params: option,
+    });
+    if (
+      response.data.code !== 200 ||
+      response.data.lrc === undefined ||
+      response.data.lrc.lyric === ''
+    )
+      return Promise.resolve('暂无歌词');
+    return response.data.lrc.lyric ?? Promise.resolve('暂无歌词');
+  } catch (error) {
+    return Promise.resolve('暂无歌词');
+  }
+}
+
+export async function getSongComment(
+  option: API.SongComment
+): Promise<API.SongCommentResponse> {
+  try {
+    const response = await axios.get<API.SongCommentResponse>(
+      '/comment/music',
+      { params: option }
+    );
+    if (response.data.code !== 200)
+      return Promise.reject(response.data.msg ?? 'Unknown Error');
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
 
 // TODO(加分项): /user/follows
 
