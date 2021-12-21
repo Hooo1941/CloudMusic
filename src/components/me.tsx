@@ -1,12 +1,22 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
+import Tooltip from '@mui/material/Tooltip';
 
-function Me(): React.ReactElement {
+interface IProp {
+  username?: string;
+}
+
+function Me(props: IProp): React.ReactElement {
+  const tooltip = props.username ?? localStorage.getItem('username') ?? '登录';
+  const isLogined = tooltip !== '登录';
+
   return (
-    <IconButton color="inherit">
-      <PersonIcon />
-    </IconButton>
+    <Tooltip title={tooltip}>
+      <IconButton color="inherit" href={isLogined ? '' : '/#/login'}>
+        <PersonIcon />
+      </IconButton>
+    </Tooltip>
   );
 }
 

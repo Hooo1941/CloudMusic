@@ -57,11 +57,12 @@ export async function phoneLogin(
   option: API.Login
 ): Promise<API.LoginResponse> {
   try {
-    option.md5password = Md5.hashStr(option.password);
+    option.md5_password = Md5.hashStr(option.password);
     option.password = '';
-    const response = await axios.post<API.LoginResponse>('/login/cellphone', {
-      option,
-    });
+    const response = await axios.post<API.LoginResponse>(
+      '/login/cellphone',
+      option
+    );
     if (response.data.code !== 200 || response.data.cookie === null)
       return Promise.reject(response.data.msg ?? 'Unknown Error');
     return response.data;

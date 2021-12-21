@@ -3,8 +3,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { useInput } from '@mui/base';
 import { styled } from '@mui/system';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Popper from '@mui/material/Popper';
 import * as api from '../service/api';
@@ -65,6 +65,7 @@ export default function SearchBar(): React.ReactElement {
   const [search, setSearch] = useState('');
   const [suggest, setSuggest] = useState(Array<API.Song>());
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [hide, setHide] = React.useState(true);
 
   const changeSearch = useCallback((e) => {
     setSearch(e);
@@ -100,12 +101,11 @@ export default function SearchBar(): React.ReactElement {
     if (suggest.length > 0) {
       return suggest.map((e) => (
         <React.Fragment key={Math.random()}>
-          <ListItem
+          <ListItemButton // BUG: 点击后无法跳转
             alignItems="flex-start"
-            onClick={() => {
-              // TODO: Jump to details
-              console.log(e);
-            }}
+            // onClick={() => setHide(true)}
+            component="a"
+            href={'/#/song?id=' + e.id}
           >
             <ListItemText
               primary={
@@ -113,7 +113,7 @@ export default function SearchBar(): React.ReactElement {
               }
               secondary={e.artists.map((e) => e.name).join(', ')}
             />
-          </ListItem>
+          </ListItemButton>
           <Divider sx={{ margin: '0 0 0 0' }} variant="inset" component="li" />
         </React.Fragment>
       ));
@@ -122,13 +122,16 @@ export default function SearchBar(): React.ReactElement {
 
   const id =
     suggest.length > 0 && Boolean(anchorEl) ? 'simple-popper' : undefined;
-  const open = suggest.length > 0;
+  const open = suggest.length > 0 && !hide;
 
   return (
     <StyledSearch>
       <SearchInput
         placeholder="搜索歌曲"
+        onFocus={() => setHide(false)}
+        onBlur={() => setHide(true)}
         onChange={(e) => {
+          setHide(false);
           changeSearch(e.target.value);
           setAnchorEl(e.currentTarget);
         }}

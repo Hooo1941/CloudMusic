@@ -64,7 +64,7 @@ declare namespace API {
 
   type SongUrl = {
     id: number;
-    br: number;
+    br?: number;
   };
 
   type SongUrlResponse = {
@@ -80,7 +80,7 @@ declare namespace API {
   type Login = {
     phone: number;
     password: string;
-    md5password?: string;
+    md5_password?: string;
   };
 
   type LoginResponse = {
@@ -88,6 +88,9 @@ declare namespace API {
     msg?: string;
     token?: string;
     cookie?: string;
+    account?: {
+      userName: string;
+    };
   };
 
   type UserProfile = {
@@ -149,16 +152,22 @@ declare namespace API {
   type SongDetailResponse = {
     code: number;
     msg?: string;
-    songs: Array<{
-      name: string;
+    songs: Array<OneSongDetail>;
+  };
+
+  type OneSongDetail = {
+    name: string;
+    id: number;
+    ar: Array<{
       id: number;
-      al: {
-        // album?
-        id: number;
-        name: string;
-        picUrl: string;
-      };
+      name: string;
     }>;
+    al: {
+      // album?
+      id: number;
+      name: string;
+      picUrl: string;
+    };
   };
 
   type Lyric = {
