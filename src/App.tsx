@@ -51,6 +51,9 @@ export default function App(): React.ReactElement {
                 color="inherit"
                 noWrap
                 sx={{ flexGrow: 1 }}
+                onClick={() => {
+                  location.href = '/#/';
+                }}
               >
                 网易云音乐
               </Typography>

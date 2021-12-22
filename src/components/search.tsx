@@ -101,9 +101,9 @@ export default function SearchBar(): React.ReactElement {
     if (suggest.length > 0) {
       return suggest.map((e) => (
         <React.Fragment key={Math.random()}>
-          <ListItemButton // BUG: 点击后无法跳转
+          <ListItemButton
             alignItems="flex-start"
-            // onClick={() => setHide(true)}
+            onClick={() => setHide(true)}
             component="a"
             href={'/#/song?id=' + e.id}
           >
@@ -125,11 +125,16 @@ export default function SearchBar(): React.ReactElement {
   const open = suggest.length > 0 && !hide;
 
   return (
-    <StyledSearch>
+    <StyledSearch
+      onBlur={() =>
+        setTimeout(() => {
+          setHide(true);
+        }, 200)
+      }
+    >
       <SearchInput
         placeholder="搜索歌曲"
         onFocus={() => setHide(false)}
-        onBlur={() => setHide(true)}
         onChange={(e) => {
           setHide(false);
           changeSearch(e.target.value);
@@ -137,8 +142,7 @@ export default function SearchBar(): React.ReactElement {
         }}
         onKeyUp={(e) => {
           if (e.key === 'Enter') {
-            console.log(e);
-            // TODO: 路由切换
+            location.href = '/#/search?keywords=' + search;
           }
         }}
       />

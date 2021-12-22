@@ -47,7 +47,7 @@ declare namespace API {
     // mvid: number;
   };
 
-  type SearchResponse = {
+  export type SearchResponse = {
     songs?: Array<Song>;
     hasMore?: boolean;
     songCount: number;
@@ -139,6 +139,7 @@ declare namespace API {
       coverImgUrl: string;
       playCount: number;
       tags: Array<string>;
+      tracks: Array<OneSongDetail>;
       trackIds: Array<{
         id: number;
       }>;
@@ -155,7 +156,7 @@ declare namespace API {
     songs: Array<OneSongDetail>;
   };
 
-  type OneSongDetail = {
+  export type OneSongDetail = {
     name: string;
     id: number;
     ar: Array<{
@@ -188,6 +189,7 @@ declare namespace API {
   };
 
   type Comment = {
+    commentId: number;
     user: {
       nickname: string;
       avatarUrl: string;
@@ -203,6 +205,6 @@ declare namespace API {
     msg?: string;
     hotComments?: Array<Comment>;
     comments?: Array<Comment>;
+    total?: number;
   };
-  // TODO: /comment/floor
 }

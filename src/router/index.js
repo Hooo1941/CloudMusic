@@ -11,7 +11,7 @@ const routes = [
   { path: '/', exact: true, component: index },
   { path: '/login', component: login },
   { path: '/playlist', component: playlist },
-  { path: '/searchlist', component: searchlist },
+  { path: '/search', component: searchlist },
   { path: '/song', component: song },
   { path: '/APItest', component: APItest },
   { component: page404 },
