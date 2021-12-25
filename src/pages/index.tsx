@@ -34,7 +34,9 @@ function Index(): React.ReactElement {
       <div className="hot">
         <ImageList sx={{ width: 0.75, mx: 'auto' }}>
           <ImageListItem key="Subheader" cols={2}>
-            <ListSubheader component="div">热门歌曲</ListSubheader>
+            <ListSubheader component="div" sx={{ zIndex: 0 }}>
+              热门歌曲
+            </ListSubheader>
           </ImageListItem>
           {playlist.map((item) => (
             <ImageListItem

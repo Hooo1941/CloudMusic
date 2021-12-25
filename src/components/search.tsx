@@ -131,6 +131,7 @@ export default function SearchBar(): React.ReactElement {
           setHide(true);
         }, 200)
       }
+      sx={{ zIndex: 100000 }}
     >
       <SearchInput
         placeholder="搜索歌曲"
